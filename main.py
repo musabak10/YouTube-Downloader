@@ -76,9 +76,15 @@ class YoutubeIndiriciApp:
 
             yukseklikler.sort(reverse=True)
 
-            self.secenekler = [("En iyi kalite (otomatik)", "bv*+ba/b")]
+            self.secenekler = [
+                ("En iyi kalite (otomatik)", "bv*+ba[format_note*=original]/bv*+ba/b")
+            ]
             for y in yukseklikler:
-                self.secenekler.append((f"{y}p", f"bv*[height<={y}]+ba/b[height<={y}]"))
+                self.secenekler.append((
+                    f"{y}p",
+                    f"bv*[height<={y}]+ba[format_note*=original]"
+                    f"/bv*[height<={y}]+ba/b[height<={y}]"
+                ))
 
             self.baslik = info.get('title', 'video')
 
@@ -102,7 +108,7 @@ class YoutubeIndiriciApp:
         self.durum_label.config(text="Hata oluştu.", fg="red")
         messagebox.showerror("Hata", mesaj)
 
-   
+    # ---------- İndirme ----------
     def indirmeyi_baslat(self):
         url = self.link_entry.get().strip()
         secim_index = self.kalite_combo.current()
